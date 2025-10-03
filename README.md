@@ -53,6 +53,33 @@ This project aims to teach:
 
 ## Compilation Instructions
 
+## 1 .Using Makefile
+How to Use
+
+Go to the project folder:
+cd ~/Desktop/CompileDemo
+
+Compile the executable:
+
+make
+
+Generate preprocessed (.i) and assembly (.s) files:
+
+make generate
+
+This will create:
+main.i       function.i      main.s      function.s
+
+Run the program:
+
+make run
+
+Clean all generated files:
+
+make clean
+
+## 2.Using Commands
+
 You can compile this project using `gcc` as follows:
 
 ```bash
@@ -64,4 +91,16 @@ The header file function.h is included in main.c using #include.
 
 To run the program:
 ./CompileDemo
+
+
+## Learning Outcomes
+By working with this project, you will understand:
+Function declarations vs implementations.
+The role of header files in organizing code.
+Steps of compilation, assembly, and linking.
+How to manage multi-file C projects efficiently.
+
+
+
+
 
