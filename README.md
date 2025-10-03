@@ -7,6 +7,7 @@
 ## Project Structure
 
 CompileDemo/
+
 │
 
 ├── main.c # Contains the main() function
