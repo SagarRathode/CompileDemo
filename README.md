@@ -1,88 +1,113 @@
-# CompileDemo
+# CompileDemo Utility Library
 
-## Overview  
-**CompileDemo** is a minimal yet professional-grade C project that demonstrates the fundamentals of the compilation and linking process.  
-The project is intentionally simple — containing a single header file and two source files — but structured to clearly illustrate:  
+## Overview
+**CompileDemo** is a professional-level C shared library project that demonstrates:
 
-- Separation of interface (`.h`) and implementation (`.c`)  
-- Function declaration vs. definition  
-- Data sharing across compilation units  
-- Compilation and linking workflow using standard build tools  
+- Building a **shared library** (`libutils.so`)
+- Installing **headers** and library system-wide
+- Using **pkg-config** for portable compilation
+- Modular C code with proper separation of API (`.h`) and implementation (`.c`)
+- Example client program linking dynamically to the library
 
-This project can serve as:  
-- A **learning tool** for beginners exploring the C compilation model  
-- A **template/skeleton project** for small experiments  
-- A **teaching reference** in coursework or documentation  
+The library provides simple **math utilities** and **string helper functions**, suitable for learning dynamic linking and professional C project structure.
 
 ---
 
-## Project Structure  
+## Project Structure
 
 CompileDemo/
+│
+
+├── include/
+
+│ └── utils.h # Public API header
 
 │
 
 ├── src/
 
-│ ├── main.c # Entry point with main() function
+│ ├── utils.c # Library implementation
 
-│ ├── function.c # Function implementations and global data
-
-│
-
-├── include/
-
-│ └── function.h # Function prototypes and external declarations
+│ └── main.c # Example client program
 
 │
 
-├── Makefile # Build automation (GCC/Clang)
+├── build/ # Compiled objects and shared library
 
-└── README.md # Project documentation
+├── lib/ # Installed library location
 
+├── pkgconfig/
 
+│ └── utils.pc # pkg-config metadata
 
----
+├── Makefile # Build and install automation
 
-## Files Explained  
-
-- **`main.c`**  
-  Contains the `main()` function. Demonstrates calling functions declared in the header and implemented in a separate source file.  
-
-- **`function.h`**  
-  Declares function prototypes and external data used by `main.c`. Serves as the interface between compilation units.  
-
-- **`function.c`**  
-  Implements the functions and defines global data referenced by `main.c`.  
+└── README.md
 
 ---
 
-## Build Instructions  
+## Installation
 
-### Using `gcc` manually:
-```bash
-# Compile each .c file into an object file
+### Build library locally
+sudo make install
 
-gcc -Iinclude -c src/main.c -o main.o
-gcc -Iinclude -c src/function.c -o function.o
+This installs:
+libutils.so → /usr/local/lib/
+utils.h → /usr/local/include/
+utils.pc → /usr/local/lib/pkgconfig/
 
-## Link object files into final executable
-gcc main.o function.o -o compiledemo
-Using make:
-make
-This will produce an executable named compiledemo.
-Running the Program
-./compiledemo
-Expected Output:
-Function called successfully!
-Learning Objectives
-By working through this project, you will:
-Understand how the compiler translates source into object files
-Learn how the linker resolves references between compilation units
-See the role of headers as contracts between files
-Practice using a Makefile for clean and repeatable builds
-License
-This project is released under the MIT License.
-You are free to use, modify, and distribute for educational or professional purposes.
+### Usage
+After installation, you can compile any C program using the library with pkg-config:
 
----
+gcc main.c $(pkg-config --cflags --libs utils) -o mainApp
+./mainApp
+
+
+### Example Output:
+=== CompileDemo Shared Utility Library ===
+Adding 10 + 20 = 30
+
+Factorial of 5 = 120
+
+[INFO] Library functions executed successfully!
+
+
+## API
+Header: utils.h
+// Math utilities
+
+int add(int a, int b);
+
+int factorial(int n);
+
+// String utilities
+void printMessage(const char *msg);
+
+// Library metadata
+extern const char *projectName;
+
+
+## Makefile Targets
+make → Build shared library and example client
+
+make install → Install library, headers, and pkg-config file
+
+make uninstall → Remove installed library and headers
+
+make clean → Clean build artifacts
+
+## Learning Objectives
+Understand shared vs static libraries in C
+
+Learn position-independent code (-fPIC) for shared libraries
+
+Understand dynamic linking and runtime linking paths (rpath)
+
+Learn pkg-config integration for easy compilation
+
+Practice professional project layout and modular C programming
+
+## License
+
+MIT License. You are free to use, modify, and distribute this library for educational or professional purposes.
+
